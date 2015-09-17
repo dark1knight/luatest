@@ -67,18 +67,19 @@ void Complex::Run()
     };
     cout << "opening library for vec...\n";
     
+    cout << "lua_gettop = " << lua_gettop(state_p->L) << "\n";
     intpvec ipv = (intpvec)lua_newuserdata(state_p->L, sizeof(vector<int> *)); // first on stack
     // push new user data onto stack 
     *ipv = (&ints); // set the 
     { // method 1
-    cout << "lua_gettop = " << lua_gettop(state_p->L) << "\n";
     luaL_newmetatable(state_p->L, "A.veclib"); // second on stack
-    cout << "lua_gettop = " << lua_gettop(state_p->L) << "\n";
+    cout << "lua_gettop (after metatable) = " << lua_gettop(state_p->L) << "\n";
     luaL_openlib(state_p->L, "veclib", veclib, 0);
-    lua_setfield(state_p->L, -2, "__index"); // attaching __index to userdata
-    cout << "lua_gettop = " << lua_gettop(state_p->L) << "\n";
+    cout << "lua_gettop (after openlib) = " << lua_gettop(state_p->L) << "\n";
+    lua_setfield(state_p->L, -2, "__index"); // attaching __index to metatable and pop
+    cout << "lua_gettop (after setfield) = " << lua_gettop(state_p->L) << "\n";
     lua_setmetatable(state_p->L, -2); // set metatable on the userdata and pop it off
-    cout << "lua_gettop = " << lua_gettop(state_p->L) << "\n";
+    cout << "lua_gettop (after setmetatable) = " << lua_gettop(state_p->L) << "\n";
     }
     { // method 2 - doesn't work. figure out why...
     //luaL_newmetatable(state_p->L, "A.b");
