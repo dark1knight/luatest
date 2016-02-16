@@ -1,0 +1,8 @@
+BasedOnStyle: Google
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: true
+BreakBeforeTernaryOperators: true
+ColumnLimit: 90
+Cpp11BracedListStyle: true
+IndentWidth: 4
